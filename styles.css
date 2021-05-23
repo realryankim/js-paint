@@ -1,0 +1,83 @@
+@import 'reset.css';
+
+body {
+  background-color: #f6f9fc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.canvas {
+  width: 550px;
+  height: 550px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 3px 15px 15px 1px rgba(224, 224, 224, 1);
+}
+
+.controls {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls .controls__range {
+  margin-bottom: 2rem;
+}
+
+.controls .controls__btns {
+  margin-bottom: 2rem;
+}
+
+.controls__btns button {
+  all: unset;
+  width: 5rem;
+  padding: 0.5rem 0;
+  background-color: white;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 3px 15px 15px 1px rgba(224, 224, 224, 1);
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.controls__btns button:active {
+  transform: scale(1.1);
+}
+
+.controls,
+.controls__colors {
+  display: flex;
+}
+
+.controls__colors .controls__color {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 3rem;
+  border-radius: 2rem;
+  box-shadow: 3px 15px 15px 1px rgba(224, 224, 224, 1);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+  .canvas {
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 3px 15px 15px 1px rgba(224, 224, 224, 1);
+  }
+
+  .controls__colors .controls__color {
+    width: 3rem;
+    height: 3rem;
+  }
+}
