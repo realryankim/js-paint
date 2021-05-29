@@ -1,17 +1,22 @@
 const canvas = document.querySelector('#jsCanvas');
-const ctx = canvas.getContext('2d');
+const context = canvas.getContext('2d');
 const colors = document.getElementsByClassName('color');
 const range = document.querySelector('#jsRange');
 const mode = document.querySelector('#jsMode');
+const saveBtn = document.querySelector('#jsSave');
 
 const INITIAL_COLOR = '#2c2c2c';
 
 canvas.width = document.getElementsByClassName('canvas')[0].offsetWidth;
 canvas.height = document.getElementsByClassName('canvas')[0].offsetHeight;
 
-ctx.strokeStyle = INITIAL_COLOR;
-ctx.fillStyle = INITIAL_COLOR;
-ctx.lineWidth = 2.5;
+// default background when the page is loaded
+context.fillStyle = 'white';
+context.fillRect(0, 0, canvas.width, canvas.height);
+
+context.strokeStyle = INITIAL_COLOR;
+context.fillStyle = INITIAL_COLOR;
+context.lineWidth = 2.5;
 
 let painting = false;
 let filling = false;
@@ -21,7 +26,9 @@ const stopPainting = () => {
 };
 
 const startPainting = () => {
-  painting = true;
+  if (filling === false) {
+    painting = true;
+  }
 };
 
 const onMouseMove = e => {
@@ -29,26 +36,26 @@ const onMouseMove = e => {
   const y = e.offsetY;
   if (!painting) {
     // 선 경로 생성
-    ctx.beginPath();
+    context.beginPath();
     // 선 시작 좌표
-    ctx.moveTo(x, y);
+    context.moveTo(x, y);
   } else {
     // 선 끝 좌표
-    ctx.lineTo(x, y);
+    context.lineTo(x, y);
     // 선 그리기
-    ctx.stroke();
+    context.stroke();
   }
 };
 
 const handleColorClick = e => {
   const color = e.target.style.backgroundColor;
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
+  context.strokeStyle = color;
+  context.fillStyle = color;
 };
 
 const handleRangeChange = e => {
   const size = e.target.value;
-  ctx.lineWidth = size;
+  context.lineWidth = size;
 };
 
 const handleModeClick = () => {
@@ -63,8 +70,20 @@ const handleModeClick = () => {
 
 const handleCanvasClick = () => {
   if (filling) {
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
   }
+};
+
+const handleContextMenu = e => {
+  e.preventDefault();
+};
+
+const saveClick = async () => {
+  const image = canvas.toDataURL();
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = 'Your-Paint[🎨]';
+  link.click();
 };
 
 if (canvas) {
@@ -73,6 +92,7 @@ if (canvas) {
   canvas.addEventListener('mouseup', stopPainting);
   canvas.addEventListener('mouseleave', stopPainting);
   canvas.addEventListener('click', handleCanvasClick);
+  canvas.addEventListener('contextmenu', handleContextMenu);
 }
 
 Array.from(colors).forEach(color =>
@@ -85,4 +105,8 @@ if (range) {
 
 if (mode) {
   mode.addEventListener('click', handleModeClick);
+}
+
+if (saveBtn) {
+  saveBtn.addEventListener('click', saveClick);
 }
