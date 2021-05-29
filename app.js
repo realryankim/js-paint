@@ -3,6 +3,7 @@ const context = canvas.getContext('2d');
 const colors = document.getElementsByClassName('color');
 const range = document.querySelector('#jsRange');
 const mode = document.querySelector('#jsMode');
+const clearBtn = document.querySelector('#jsClear');
 const saveBtn = document.querySelector('#jsSave');
 
 const INITIAL_COLOR = '#2c2c2c';
@@ -78,11 +79,15 @@ const handleContextMenu = e => {
   e.preventDefault();
 };
 
-const saveClick = async () => {
+const clearClick = () => {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+const saveClick = () => {
   const image = canvas.toDataURL();
   const link = document.createElement('a');
   link.href = image;
-  link.download = 'Your-Paint[🎨]';
+  link.download = 'ParingJS[🎨]';
   link.click();
 };
 
@@ -105,6 +110,10 @@ if (range) {
 
 if (mode) {
   mode.addEventListener('click', handleModeClick);
+}
+
+if (clearBtn) {
+  clearBtn.addEventListener('click', clearClick);
 }
 
 if (saveBtn) {
